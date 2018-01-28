@@ -79,7 +79,9 @@ namespace detail
     virtual Sexpr const* transmute(char const** input) const;
 
   public:
-    // needs to be public for various keywords
+    // TODO, not a fan of this being public, because then it can
+    // be called through SEXPR::operator->()
+    // but unfortunately some keyword handlers need it
     virtual Sexpr const* eval(SexprEnv const* env) const;
 
   protected:
