@@ -249,7 +249,7 @@ CX_METHOD(SexprCons const* DSL::detail::SexprCons::EvalArgs,
 
   // XXX we use env->context() instead of sc_ because this function
   // is likely to become a static member function.
-  SexprCons const* result = new SexprCons(env->sc_, first, rest);
+  SexprCons const* result = new SexprCons(env->context(), first, rest);
   CX_RETURN(result);
 
 CX_ENDMETHOD

@@ -52,8 +52,6 @@ namespace detail
     template <class U>
     friend Sexpr const* parse(Context*, char const**);
 
-    friend class DSL::detail::SexprCons;  // for sc_
-
   protected:
     Sexpr(Context* sc=nullptr);  // see implementation
 
