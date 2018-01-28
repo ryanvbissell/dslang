@@ -2,3 +2,7 @@
 	path = _forge
 	url = git@github.com:ryanvbissell/make-forge.git
 	branch = sub-0.2/dslang
+[submodule "sub/cx"]
+	path = sub/cx
+	url = git@github.com:ryanvbissell/cx.git
+	branch = sub-0.1/dslang
