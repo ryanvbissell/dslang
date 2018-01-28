@@ -30,8 +30,8 @@
   X(FOREIGN)        \
   X(CUSTOM)
 
-// NOTE: these don't belong in the list above, because they are
-// categories, not leaf types.  They are detected with...
+// NOTE: the following don't belong in the list above, because they
+// are categories, not leaf types.  They are detected with...
 //   * LITERAL  : sexpr->IsLiteralType()
 //   * CALLABLE : sexpr->IsCallableType()
 
@@ -39,54 +39,24 @@
 namespace DSL
 {
 
-class Scheme;
-
 namespace detail
 {
   class Context;
   class Sexpr;
-  class SexprVoid;
   class SexprEnv;
   class SexprCons;
-  class SexprBool;
-  class SexprIdent;  // TODO, this is getting silly
-  class SexprLiteral;
-  class SexprNumber;
   class SexprClosure;
-  class SexprKeyword;
-  class SexprForeign;
-}
-
-////using SexprENV = CX::IntrusivePtr<detail::SexprEnv>;
-
-namespace detail
-{
-  template <class T>
-  Sexpr const* parse(Context*, char const**);
 
   class Sexpr : public CX::IntrusiveBase
   {
     template <class U>
     friend Sexpr const* parse(Context*, char const**);
 
-    friend class Context;
-    friend class DSL::detail::SexprCons;  // for sc_ (and eval(), if not public)
-    friend class DSL::detail::SexprClosure;  // for Disowned() & delete
-    friend class DSL::detail::SexprForeign;  // for Disowned() & delete
+    friend class Context; // access to destructor
+    friend class DSL::detail::SexprCons;  // for sc_ and destructor
+    friend class DSL::detail::SexprClosure;  // access to destructor
 
-    // TODO, scary?
-    //template <typename> friend class CX::IntrusivePtr;  // Disowned()
-    //
-    friend class CX::IntrusivePtr<Sexpr>;
-    friend class CX::IntrusivePtr<SexprVoid>;
-    friend class CX::IntrusivePtr<SexprEnv>;  // TODO this is getting silly
-    friend class CX::IntrusivePtr<SexprIdent>;  // TODO this is getting silly (Disowned)
-    friend class CX::IntrusivePtr<SexprLiteral>;  // TODO this is getting silly (Adopted/Disowned)
-    friend class CX::IntrusivePtr<SexprNumber>;  // TODO this is getting silly (Adopted/Disowned)
-    friend class CX::IntrusivePtr<SexprClosure>;  // TODO this is getting silly (Adopted/Disowned)
-    friend class CX::IntrusivePtr<SexprKeyword>;  // TODO this is getting silly (Adopted/Disowned)
-    friend class CX::IntrusivePtr<SexprForeign>;  // TODO this is getting silly (Adopted/Disowned)
-    friend class Context;
+    friend class CX::IntrusivePtr<Sexpr>;  // access to destructor
 
   protected:
     Sexpr(Context* sc=nullptr);  // see implementation
@@ -95,6 +65,8 @@ namespace detail
     virtual void Mark() const  { marked_ = true;   }
     void ClearMark()    const  { marked_ = false;  }
     bool IsMarked()     const  { return marked_;   }
+    void Adopted() const override;
+    bool Disowned() const override;
 
     virtual std::string Print() const;
     virtual std::string Display() const;
@@ -104,10 +76,6 @@ namespace detail
     virtual ~Sexpr();
 
   protected:
-    void Adopted() const override;
-    bool Disowned() const override;
-
-  protected:
     virtual Sexpr const* transmute(char const** input) const;
 
   public:
@@ -115,7 +83,7 @@ namespace detail
     virtual Sexpr const* eval(SexprEnv const* env) const;
 
   protected:
-    mutable Context* sc_;  // TODO, not to be const because of need to call addSymbol()
+    mutable Context* sc_;
     mutable bool marked_;
     U32 serial_;
     static U32 extant_;
