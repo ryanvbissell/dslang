@@ -1,0 +1,31 @@
+# vim: set ft=make:
+#
+# Copyright (c) 2017, Ryan V. Bissell
+# All rights reserved.
+#
+# SPDX-License-Identifier: BSD-2-Clause
+# See the enclosed "LICENSE" file for exact license terms.
+#
+
+CXX=g++
+
+# TODO: there is a problem here with using the += operator to append
+# things to CF_CXXFLAGS, etc.: it causes spurious recompiles of some
+# modules if this make-forge fragment gets reloaded multiple times
+# (such as with multiple subsections in test-forge relying on it)
+# Probably the best solution would be to provide make functions that
+# treat CF_CXXFLAGS, etc. as sets, guaranteeing that each addition
+# occurs only once.   That may be problematic for CF_LDFLAGS, though,
+# as I believe that it is meaningful to sometimes repeat linker flags.
+#
+# For now, solve our problem with an explicit test, in-situ.
+$(if $(filter -std=c++17,$(CF_CXXFLAGS)),,$(eval override CF_CXXFLAGS+=-std=c++17))
+
+
+# describe how to build dslang.a
+$(call mf-declare-target,static)
+    override CPPFLAGS+=-I$(CXDIR)/inc -I$(CURDIR)/inc
+    $(call mf-add-sources,C++,$(CURDIR)/src,dslang*.cpp)
+    $(call mf-add-sources,C++,$(CURDIR)/src,sexpr*.cpp)
+    $(call mf-build-static-library,dslang)
+

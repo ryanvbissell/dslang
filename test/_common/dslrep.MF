@@ -1,0 +1,25 @@
+# vim: set ft=make:
+#
+# Copyright (c) 2017, Ryan V. Bissell
+# All rights reserved.
+#
+# SPDX-License-Identifier: BSD-2-Clause
+# See the enclosed "LICENSE" file for exact license terms.
+#
+
+# import rules for building libcx.a
+CXOUT:=$(MFOUT)
+CXDIR:=$(TF_TESTROOT)/../sub/cx
+WITH:=intrusive
+$(strip $(call mf-include-as,cxlib,$(CXDIR)/GNUmakefile.MF))
+
+# import rules for building dslang.a
+$(strip $(call mf-include-as,dslang,$(TF_TESTROOT)/../GNUmakefile.MF))
+
+# describe how to build dslrep
+$(call mf-declare-target,dslrep)
+    override CPPFLAGS+=-I$(CXDIR)/inc -I$(TF_TESTROOT)/../inc
+    $(call mf-add-sources,C++,$(TF_TESTROOT)/_common,dslrep.cpp)
+    $(call mf-build-static-library,dslrep)
+
+
