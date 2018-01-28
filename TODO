@@ -1,0 +1,8 @@
+
+Fix friendship explosion
+
+#define ADOPT(sexpr)  (sexpr ? sexpr->Adopted() : sexpr)
+#define DISOWN(sexpr) (sexpr ? sexpr->Disowned() : true)
+
+Use linenoise in the repl ?
+

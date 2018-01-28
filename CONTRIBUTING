@@ -1,0 +1,17 @@
+CONTRIBUTING TO THE DSLANG PROJECT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Even though DSLANG is licensed as BSD-2-Clause, it is presently very much a
+private endeavor, and it is all copyrighted by Ryan V. Bissell in the
+year of its authorship.  At least during the early stages of development,
+contributions from other parties are not likely to be accepted. Think of
+it as performance art, on public display.
+
+The above is expected to change, eventually.  When it does, I will decide
+then whether or not contributors must agree to declare that their
+contributions are available under the same BSD-2-Clause terms, and/or
+ask them to formally assign copyright (with attribution.)
+
+You are, of course, free to use it for your own nefarious purposes,
+subject to the terms spelled out in the 'LICENSE' file.
+
