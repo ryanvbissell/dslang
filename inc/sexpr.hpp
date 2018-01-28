@@ -52,11 +52,7 @@ namespace detail
     template <class U>
     friend Sexpr const* parse(Context*, char const**);
 
-    friend class Context; // access to destructor
-    friend class DSL::detail::SexprCons;  // for sc_ and destructor
-    friend class DSL::detail::SexprClosure;  // access to destructor
-
-    friend class CX::IntrusivePtr<Sexpr>;  // access to destructor
+    friend class DSL::detail::SexprCons;  // for sc_
 
   protected:
     Sexpr(Context* sc=nullptr);  // see implementation
@@ -72,7 +68,6 @@ namespace detail
     virtual std::string Display() const;
     virtual std::string Write() const = 0;
 
-  protected:
     virtual ~Sexpr();
 
   protected:
