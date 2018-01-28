@@ -30,3 +30,5 @@ redundant copy of make-forge for CX (which *would* be needed if you
 were hacking on CX, but in this case DSLANG's own make-forge
 instance suffices for both, when building DSLANG.)
 
+Each submodule (generally, under ./sub) has its own respective copyright
+and license terms.  Please refer to the appropriate files for more info.
